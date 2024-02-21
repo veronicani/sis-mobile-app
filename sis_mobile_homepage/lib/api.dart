@@ -25,9 +25,6 @@ Future<void> getToken(String username, String password) async {
 
 
 class AssessmentSessionsProvider with ChangeNotifier {
-  AssessmentSessionsProvider() {
-    fetchAssessments();
-  }
 
   List<AssessmentSession> _assessmentSessions = [];
 
@@ -45,6 +42,7 @@ class AssessmentSessionsProvider with ChangeNotifier {
     );
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body) as List;
+      print(response.body);
       _assessmentSessions = jsonData
           .map<AssessmentSession>(
               (assessment) => AssessmentSession.fromJson(assessment))

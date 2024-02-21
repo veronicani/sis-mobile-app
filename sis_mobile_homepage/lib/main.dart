@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sis_mobile_homepage/api.dart';
+import 'package:sis_mobile_homepage/assessment_sessions.dart';
 void main() {
   runApp(MyApp());
   getToken("admin", "password");
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+    }
+
+class _MyAppState extends State<MyApp>{
+  late Future<AssessmentSession> futureAssessment;
+
+  @override
+  void initState() {
+    super.initState();
+    futureAssessment = fetchAssessments();
+  }
 
   @override
   Widget build(BuildContext context) {
