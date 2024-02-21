@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
         title: 'Namer App',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromRGBO(228, 107, 102, 1.0)),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Color.fromRGBO(228, 107, 102, 1.0)),
         ),
         home: MyHomePage(),
       ),
@@ -45,7 +46,6 @@ class MyAppState extends ChangeNotifier {
   }
 }
 
-
 class BigCard extends StatelessWidget {
   const BigCard({
     super.key,
@@ -58,9 +58,7 @@ class BigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final style = theme.textTheme.headlineLarge!.copyWith(
-      color: theme.colorScheme.onPrimary,
-      fontFamily: "Source Serif Pro"
-    );
+        color: theme.colorScheme.onPrimary, fontFamily: "Source Serif Pro");
 
     return Card(
       color: theme.colorScheme.primary,
@@ -94,48 +92,49 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FavoritesPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
 
-    return Scaffold(
-      body: Row(
-        children: [
-          SafeArea(
-            child: NavigationRail(
-              extended: false,
-              destinations: [
-                NavigationRailDestination(
-                  icon: Icon(Icons.home),
-                  label: Text('Home'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.favorite),
-                  label: Text('Favorites'),
-                ),
-              ],
-              selectedIndex: selectedIndex,
-              onDestinationSelected: (value) {
-                setState(() {
-                  selectedIndex = value;
-                });
-              },
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+        body: Row(
+          children: [
+            SafeArea(
+              child: NavigationRail(
+                extended: constraints.maxWidth >= 600,
+                destinations: [
+                  NavigationRailDestination(
+                    icon: Icon(Icons.home),
+                    label: Text('Home'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.favorite),
+                    label: Text('Favorites'),
+                  ),
+                ],
+                selectedIndex: selectedIndex,
+                onDestinationSelected: (value) {
+                  setState(() {
+                    selectedIndex = value;
+                  });
+                },
+              ),
             ),
-          ),
-          Expanded(
-            child: Container(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              child: page,
+            Expanded(
+              child: Container(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                child: page,
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }
-
 
 class GeneratorPage extends StatelessWidget {
   @override
@@ -181,4 +180,37 @@ class GeneratorPage extends StatelessWidget {
   }
 }
 
-// ...
+class FavoritesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    if (appState.favorites.isEmpty) {
+      return Center(
+        child: Text('No favorites yet.'),
+      );
+    }
+
+    final theme = Theme.of(context);
+    var favorites = appState.favorites;
+    final style = theme.textTheme.headlineLarge!.copyWith(
+        color: theme.colorScheme.onPrimary, fontFamily: "Source Serif Pro");
+
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text('You have ${favorites.length} favorites:'),
+        ),
+        for (var fav in favorites)
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text(
+              fav.asLowerCase,
+              style: style,
+            ),
+          ),
+      ],
+    );
+  }
+}
