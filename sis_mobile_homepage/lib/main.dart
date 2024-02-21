@@ -1,9 +1,9 @@
-// import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sis_mobile_homepage/api.dart';
 void main() {
   runApp(MyApp());
+  // call getToken(username, pw)
 }
 
 class MyApp extends StatelessWidget {
