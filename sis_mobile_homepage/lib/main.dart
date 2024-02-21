@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sis_mobile_homepage/api.dart';
 void main() {
   runApp(MyApp());
-  // call getToken(username, pw)
+  getToken("admin", "password");
 }
 
 class MyApp extends StatelessWidget {
