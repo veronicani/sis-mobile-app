@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sis_mobile_homepage/api.dart' as sis_api;
-
+import 'package:sis_mobile_homepage/models/assessment_session.dart';
 
 /// AssessmentList widget.
 
@@ -84,31 +84,5 @@ class AssessmentListState extends State<AssessmentList> {
               // );
           )
       );
-  }
-}
-
-//TODO: move somewhere else? if so, need to import the file here to use fromJson
-
-class AssessmentSession {
-  final int id;
-  final String title;
-  final String status;
-  final String apiUrl;
-
-  const AssessmentSession(
-    {
-      required this.id,
-      required this.title,
-      required this.status,
-      required this.apiUrl
-    });
-
-  factory AssessmentSession.fromJson(Map<String, dynamic> json){
-    return AssessmentSession(
-      id: json["id"],
-      title: json["title"],
-      status: json["status"],
-      apiUrl: json["api_url"],
-    );
   }
 }

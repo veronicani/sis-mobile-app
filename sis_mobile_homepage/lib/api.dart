@@ -52,6 +52,7 @@ fetchAssessments() async {
 ///   Inputs: id - assessmentsession id (int)
 ///   Returns: { id, assessment, title, cohort, description, dri, week_group,
 ///     start_at, end_at }
+///   TODO: docstring doesn't match (couldn't destructure)
 
 fetchAssessmentDetail(id) async {
   final token = await storage.read(key: 'token');
@@ -65,6 +66,7 @@ fetchAssessmentDetail(id) async {
   if (response.statusCode == 200) {
       Map data = json.decode(response.body);
       print('fetchAssessmentDetail data= $data');
+      return data;
       // if (data
       //     case {
       //       'id': int id,
