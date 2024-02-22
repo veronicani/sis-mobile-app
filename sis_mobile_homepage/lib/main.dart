@@ -7,12 +7,16 @@ void main() {
   runApp(MyApp());
 }
 
+/// Main app.
+
 class MyApp extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp>{
+/// State for main app.
+
+class MyAppState extends State<MyApp>{
 
   @override
   Widget build(BuildContext context) {
@@ -27,23 +31,3 @@ class _MyAppState extends State<MyApp>{
       );
   }
 }
-
-// class HomePage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context){
-//     final assessmentSessionsP = Provider.of<AssessmentSessionsProvider>(context);
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Assessments'),
-//       ),
-//       body: ListView.builder(
-//         itemCount: assessmentSessionsP.assessmentSessions.length,
-//         itemBuilder: (BuildContext context, int index) {
-//           return ListTile(
-//             title: Text(assessmentSessionsP.assessmentSessions[index].title),
-//             );
-//         },
-//       ),
-//     );
-//   }
-// }

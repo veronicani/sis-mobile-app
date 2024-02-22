@@ -1,51 +1,42 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:sis_mobile_homepage/api.dart';
 
-bool isLoading = false;
+import 'package:sis_mobile_homepage/api.dart' as sis_api;
+
+
+/// AssessmentList widget.
 
 class AssessmentList extends StatefulWidget {
   @override
-  _AssessmentListState createState() => _AssessmentListState();
+  AssessmentListState createState() => AssessmentListState();
 }
 
-class _AssessmentListState extends State<AssessmentList> {
+/// AssessmentListState: manages state for AssessmentList widget.
 
-  List<dynamic> assessmentList = [];
+class AssessmentListState extends State<AssessmentList> {
+  bool isLoading = false;
+  List assessmentList = [];
 
-  fetchAssessments() async {
-    final accessToken = await storage.read(key: 'token');
-    print(accessToken);
-    http.Response response = await http.get(
-        Uri.parse("http://localhost:8000/api/assessmentsessions/"),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': "Token $accessToken",
-        });
-
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      print("***data*** = $data");
-      assessmentList = data["results"]
-            .map((item) => AssessmentSession.fromJson(item)).toList();
-      return assessmentList;
-    } else {
-      throw Exception();
-    }
+  /// loadAssessments: Makes call to API for assessments sessions, and updates 
+  /// assessmentList with list of jsonified assessment sessions objects.
+  /// Updates isLoading state.
+  
+  Future loadAssessments() async {
+    setState(() => isLoading = true);
+    
+    List data = await sis_api.fetchAssessments();
+    print('data=$data');
+    assessmentList = data
+              .map((item) => AssessmentSession.fromJson(item)).toList();
+    
+    setState(()=> isLoading = false);
   }
-
+  
+  /// initState: initializes state and fetches API data on widget load.
+  
   @override
   void initState(){
-    _fetchData();
+    loadAssessments();
     super.initState();
-  }
-
-  Future _fetchData() async{
-    setState(() => isLoading = true);
-    assessmentList = await fetchAssessments();
-    setState(()=> isLoading = false);
   }
 
   @override
@@ -76,6 +67,8 @@ class _AssessmentListState extends State<AssessmentList> {
     );
   }
 }
+
+//TODO: move somewhere else? if so, need to import the file here to use fromJson
 
 class AssessmentSession {
   final int id;
