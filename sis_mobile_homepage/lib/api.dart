@@ -66,25 +66,9 @@ fetchAssessmentDetail(url) async {
         });
   if (response.statusCode == 200) {
       Map data = json.decode(response.body);
-      print('fetchAssessmentDetail data= $data');
+      // print('fetchAssessmentDetail data= $data');
       return data;
-      // if (data
-      //     case {
-      //       'id': int id,
-      //       'title': String title,
-      //       'description': String description,
-      //       'dri': String dri,
-      //       'start_at': DateTime startAt,
-      //       'end_at': DateTime endAt,
-      //       'asset_set': List assetSet
-      //     }) {
-      //       var parsedOut = (id, title, description, dri, startAt, endAt, assetSet);
-      //       print("parsedOut= $parsedOut");
-      //       return parsedOut;
-      //     } else {
-      //       throw const FormatException('Unexpected JSON');
-      //     }
-        } else {
+    } else {
       throw Exception('Failed to fetch assessment session detail.');
     }
 }

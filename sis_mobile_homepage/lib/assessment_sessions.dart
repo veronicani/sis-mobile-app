@@ -20,14 +20,28 @@ class AssessmentListState extends State<AssessmentList> {
   /// assessmentList with list of jsonified assessment sessions objects.
   /// Updates isLoading state.
 
+  Future<List> fetchAllAssessmentDetail(urls) async {
+
+    List finalData = [];
+
+    await Future.wait(urls.map((url) async {
+        var data = await sis_api.fetchAssessmentDetail(url);
+        finalData.add(data);
+      }).toList());
+
+    return finalData;
+  }
+
   Future loadAssessments() async {
     setState(() => isLoading = true);
 
     List urls = await sis_api.fetchAssessmentUrls();
-    //FIXME: need to await fetch calls
-    List data = urls
-      .map((url) => sis_api.fetchAssessmentDetail(url)).toList();
-    print('data=$data');
+    print('%%%urls%%% = $urls');
+
+    List data = await fetchAllAssessmentDetail(urls);
+
+    print('@@@data@@@=$data');
+
     assessmentList = data
                 .map((item) => AssessmentSession.fromJson(item)).toList();
     print('assessmentList=$assessmentList');
