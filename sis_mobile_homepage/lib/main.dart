@@ -21,7 +21,7 @@ class MyAppState extends State<MyApp>{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Namer App',
+        title: 'Rithm App',
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(

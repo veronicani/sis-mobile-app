@@ -67,32 +67,46 @@ class AssessmentListState extends State<AssessmentList> {
       ),
       body: Center(
         child: isLoading
-        ? CircularProgressIndicator()
-        : Table(
-            border: TableBorder.all(),
-            children: [
-              TableRow(children: [
-              Text('Assessment', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
-              Text('Status', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
-              ]),
-                for (var assessment in assessmentList)
-                TableRow(children: [
-                    Padding(padding: EdgeInsets.all(5.0),
-                    child: Text(assessment.title, textAlign: TextAlign.center),
-                    ),
-                    Padding(padding: EdgeInsets.all(5.0),
-                      child: Column(
-                        children: [
-                          Text(assessment.startAt, textAlign: TextAlign.center),
-                          Text(assessment.endAt, textAlign: TextAlign.center)
-                        ],
-                      )
-                    ),
-                  ]
-                ),
+            ? CircularProgressIndicator()
+            : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Assessment',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+                Table(
+                    border: TableBorder.all(),
+                    children: [
+                      TableRow(children: [
+                        Text('Assessment',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text('Status',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                      ]),
+                      for (var assessment in assessmentList)
+                        TableRow(children: [
+                          Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child:
+                                Text(assessment.title, textAlign: TextAlign.center),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.all(5.0),
+                              child: Column(
+                                children: [
+                                  Text(assessment.startAt,
+                                      textAlign: TextAlign.center),
+                                  Text(assessment.endAt,
+                                      textAlign: TextAlign.center)
+                                ],
+                              )),
+                        ]),
+                    ],
+                  ),
               ],
             ),
-          ),
-        );
+      ),
+    );
   }
 }
