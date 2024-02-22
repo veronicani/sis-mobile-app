@@ -16,23 +16,23 @@ class AssessmentListState extends State<AssessmentList> {
   bool isLoading = false;
   List assessmentList = [];
 
-  /// loadAssessments: Makes call to API for assessments sessions, and updates 
+  /// loadAssessments: Makes call to API for assessments sessions, and updates
   /// assessmentList with list of jsonified assessment sessions objects.
   /// Updates isLoading state.
-  
+
   Future loadAssessments() async {
     setState(() => isLoading = true);
-    
+
     List data = await sis_api.fetchAssessments();
     print('data=$data');
     assessmentList = data
               .map((item) => AssessmentSession.fromJson(item)).toList();
-    
+
     setState(()=> isLoading = false);
   }
-  
+
   /// initState: initializes state and fetches API data on widget load.
-  
+
   @override
   void initState(){
     loadAssessments();
@@ -50,21 +50,40 @@ class AssessmentListState extends State<AssessmentList> {
       body: Center(
         child: isLoading
         ? CircularProgressIndicator()
-        : ListView.builder(
-            itemCount: assessmentList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                contentPadding: EdgeInsets.symmetric(
-                horizontal: 10.0,
-                vertical: 10.0
-              ),
-                title: Text(assessmentList[index].title),
-                subtitle: Text(assessmentList[index].status)
-              );
-            }
+        : Table(
+            border: TableBorder.all(),
+            columnWidths: const <int, TableColumnWidth> {
+              0: FlexColumnWidth(),
+              1: FlexColumnWidth(),
+            },
+            children: List<TableRow>.generate(
+              assessmentList.length,
+              (index) {
+                final assessment = assessmentList[index];
+                return TableRow(
+                  children: [
+                    Padding(padding: EdgeInsets.all(5.0),
+                    child: Text(assessment.title, textAlign: TextAlign.center),
+                    ),
+                    Padding(padding: EdgeInsets.all(5.0),
+                    child: Text(assessment.status, textAlign: TextAlign.center)
+                    ),
+                  ]
+                );
+              },
+              growable:false,
+            ),
+          ),
+              // return ListTile(
+              //   contentPadding: EdgeInsets.symmetric(
+              //   horizontal: 10.0,
+              //   vertical: 10.0
+              // ),
+              //   title: Text(assessmentList[index].title),
+              //   subtitle: Text(assessmentList[index].status)
+              // );
           )
-      )
-    );
+      );
   }
 }
 
