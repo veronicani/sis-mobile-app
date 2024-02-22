@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+///SIS API.
 const baseApiUrl = 'http://localhost:8000/api'; 
 final storage = FlutterSecureStorage();
 
@@ -27,6 +28,7 @@ Future<void> getToken(String username, String password) async {
 }
 
 /// fetchAssessments: Fetches all assessment session data from SIS API.
+///  Returns: [{id, title, status, api_url}, ...]
 
 fetchAssessments() async {
     final token = await storage.read(key: 'token');
@@ -43,5 +45,30 @@ fetchAssessments() async {
       return data;
     } else {
       throw Exception('Failed to fetch assessment sessions.');
+    }
+}
+
+/// fetchAssessmentDetail: Fetches details for one assessment session.
+///   Inputs: id - assessmentsession id (int)
+///   Returns: { id, assessment, title, cohort, description, dri, week_group,
+///     start_at, end_at }
+
+fetchAssessmentDetail(id) async {
+  final token = await storage.read(key: 'token');
+
+  http.Response response = await http.get(
+    Uri.parse("$baseApiUrl/assessmentsessions/$id"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': "Token $token",
+        });
+    if (response.statusCode == 200) {
+      Map data = json.decode(response.body);
+      print('fetchAssessmentDetail data= $data');
+      // var {id: int, assessment: String, title: String} = data;
+      return data;
+
+    } else {
+      throw Exception('Failed to fetch assessment session detail.');
     }
 }
