@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sis_mobile_homepage/api.dart';
 
+bool isLoading = false;
 
 class AssessmentList extends StatefulWidget {
   @override
@@ -39,38 +40,53 @@ class _AssessmentListState extends State<AssessmentList> {
       assessmentList = data["results"]
             .map((item) => AssessmentSession.fromJson(item)).toList();
       print("resList $assessmentList");
+      var firstItem = assessmentList[1].title;
+      print("firstItem= $firstItem");
       return assessmentList;
+    } else {
+      throw Exception();
     }
   }
 
   @override
   void initState(){
-    fetchAssessments();
+    _fetchData();
     super.initState();
+  }
+
+  Future _fetchData() async{
+    setState(() => isLoading = true);
+    assessmentList = await fetchAssessments();
+    setState(()=> isLoading = false);
   }
 
   @override
   Widget build(BuildContext context) {
+    print("**assessmentList**= $assessmentList");
     return Scaffold(
       appBar: AppBar(
         title: Text('Assessments'),
       ),
-      body: ListView(
-        children: <Widget>[
-          ListView.builder(
+      body: Center(
+        child: isLoading
+        ? CircularProgressIndicator()
+        : ListView.builder(
             itemCount: assessmentList.length,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
+                contentPadding: EdgeInsets.symmetric(
+                horizontal: 10.0,
+                vertical: 10.0
+              ),
                 title: Text(assessmentList[index].title),
+                subtitle: Text(assessmentList[index].status)
               );
-            },
-          ),
-        ],
-      ),
+            }
+          )
+      )
     );
   }
 }
-
 
 class AssessmentSession {
   final int id;
