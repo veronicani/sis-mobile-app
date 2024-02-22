@@ -4,10 +4,10 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 ///SIS API.
-const baseApiUrl = 'http://localhost:8000/api'; 
+const baseApiUrl = 'http://localhost:8000/api';
 final storage = FlutterSecureStorage();
 
-/// getToken: Sends user credentials to retrieve token and store in local 
+/// getToken: Sends user credentials to retrieve token and store in local
 /// storage for future API requests.
 
 Future<void> getToken(String username, String password) async {
@@ -32,7 +32,7 @@ Future<void> getToken(String username, String password) async {
 
 fetchAssessments() async {
     final token = await storage.read(key: 'token');
-  
+
     http.Response response = await http.get(
         Uri.parse("$baseApiUrl/assessmentsessions/"),
         headers: <String, String>{
@@ -62,13 +62,26 @@ fetchAssessmentDetail(id) async {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': "Token $token",
         });
-    if (response.statusCode == 200) {
+  if (response.statusCode == 200) {
       Map data = json.decode(response.body);
       print('fetchAssessmentDetail data= $data');
-      // var {id: int, assessment: String, title: String} = data;
-      return data;
-
-    } else {
+      // if (data
+      //     case {
+      //       'id': int id,
+      //       'title': String title,
+      //       'description': String description,
+      //       'dri': String dri,
+      //       'start_at': DateTime startAt,
+      //       'end_at': DateTime endAt,
+      //       'asset_set': List assetSet
+      //     }) {
+      //       var parsedOut = (id, title, description, dri, startAt, endAt, assetSet);
+      //       print("parsedOut= $parsedOut");
+      //       return parsedOut;
+      //     } else {
+      //       throw const FormatException('Unexpected JSON');
+      //     }
+        } else {
       throw Exception('Failed to fetch assessment session detail.');
     }
 }
