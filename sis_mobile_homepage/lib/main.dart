@@ -4,41 +4,29 @@ import 'package:sis_mobile_homepage/api.dart';
 import 'package:sis_mobile_homepage/assessment_sessions.dart';
 
 void main() {
-  runApp(MaterialApp(
-    home: AssessmentList(),
-    ));
-  getToken("admin", "password");
+  runApp(MyApp());
 }
 
-// class MyApp extends StatefulWidget {
-//   const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
-//   @override
-//   State<MyApp> createState() => _MyAppState();
-//     }
+class _MyAppState extends State<MyApp>{
 
-//   class _MyAppState extends State<MyApp>{
-  // late Future<AssessmentSession> futureAssessment;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     futureAssessment = fetchAssessments();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//         title: 'Namer App',
-//         theme: ThemeData(
-//           useMaterial3: true,
-//           colorScheme: ColorScheme.fromSeed(
-//               seedColor: Color.fromRGBO(228, 107, 102, 1.0)),
-//         ),
-//         home: AssessmentList(),
-//       );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Namer App',
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Color.fromRGBO(228, 107, 102, 1.0)),
+        ),
+        home: AssessmentList(),
+      );
+  }
+}
 
 // class HomePage extends StatelessWidget {
 //   @override

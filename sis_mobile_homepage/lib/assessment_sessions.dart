@@ -16,16 +16,21 @@ class _AssessmentListState extends State<AssessmentList> {
 
   void fetchAssessments() async {
     final accessToken = await storage.read(key: 'token');
-    final response = await http.post(
+    print(accessToken);
+    http.Response response = await http.get(
         Uri.parse("http://localhost:8000/api/assessmentsessions/"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': "Token $accessToken",
         });
+
     if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
+      var data = json.decode(response.body);
+      print(data);
       setState((){
         for (var value in data){
+          print('got to this point');
+          print(value);
           assessmentList.add(value);
           print(assessmentList);
         }
@@ -35,8 +40,8 @@ class _AssessmentListState extends State<AssessmentList> {
 
   @override
   void initState(){
-    fetchAssessments();
     super.initState();
+    fetchAssessments();
   }
 
   @override
