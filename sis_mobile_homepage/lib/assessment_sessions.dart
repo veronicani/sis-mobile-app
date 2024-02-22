@@ -28,20 +28,8 @@ class _AssessmentListState extends State<AssessmentList> {
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       print("***data*** = $data");
-      // setState((){
-      //   for (var value in data){
-      //     print('got to this point');
-      //     print(value);
-      //     assessmentList.add(value);
-      //     print(assessmentList);
-      //   }
-      // });
-
       assessmentList = data["results"]
             .map((item) => AssessmentSession.fromJson(item)).toList();
-      print("resList $assessmentList");
-      var firstItem = assessmentList[1].title;
-      print("firstItem= $firstItem");
       return assessmentList;
     } else {
       throw Exception();
