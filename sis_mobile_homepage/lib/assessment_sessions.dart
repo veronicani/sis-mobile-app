@@ -84,7 +84,12 @@ class AssessmentListState extends State<AssessmentList> {
                     child: Text(assessment.title, textAlign: TextAlign.center),
                     ),
                     Padding(padding: EdgeInsets.all(5.0),
-                    child: Text(assessment.status, textAlign: TextAlign.center)
+                      child: Column(
+                        children: [
+                          Text(assessment.startAt, textAlign: TextAlign.center),
+                          Text(assessment.endAt, textAlign: TextAlign.center)
+                        ],
+                      )
                     ),
                   ]
                 );
