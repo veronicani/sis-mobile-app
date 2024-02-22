@@ -62,7 +62,7 @@ class AssessmentListState extends State<AssessmentList> {
     print("**assessmentList**= $assessmentList");
     return Scaffold(
       appBar: AppBar(
-        title: Text('Assessments'),
+        title: Text('{R} Rithm'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
@@ -70,16 +70,13 @@ class AssessmentListState extends State<AssessmentList> {
         ? CircularProgressIndicator()
         : Table(
             border: TableBorder.all(),
-            columnWidths: const <int, TableColumnWidth> {
-              0: FlexColumnWidth(),
-              1: FlexColumnWidth(),
-            },
-            children: List<TableRow>.generate(
-              assessmentList.length,
-              (index) {
-                final assessment = assessmentList[index];
-                return TableRow(
-                  children: [
+            children: [
+              TableRow(children: [
+              Text('Assessment', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('Status', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+              ]),
+                for (var assessment in assessmentList)
+                TableRow(children: [
                     Padding(padding: EdgeInsets.all(5.0),
                     child: Text(assessment.title, textAlign: TextAlign.center),
                     ),
@@ -92,20 +89,10 @@ class AssessmentListState extends State<AssessmentList> {
                       )
                     ),
                   ]
-                );
-              },
-              growable:false,
+                ),
+              ],
             ),
           ),
-              // return ListTile(
-              //   contentPadding: EdgeInsets.symmetric(
-              //   horizontal: 10.0,
-              //   vertical: 10.0
-              // ),
-              //   title: Text(assessmentList[index].title),
-              //   subtitle: Text(assessmentList[index].status)
-              // );
-          )
-      );
+        );
   }
 }
