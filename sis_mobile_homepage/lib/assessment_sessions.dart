@@ -23,11 +23,14 @@ class AssessmentListState extends State<AssessmentList> {
   Future loadAssessments() async {
     setState(() => isLoading = true);
 
-    List data = await sis_api.fetchAssessments();
+    List urls = await sis_api.fetchAssessmentUrls();
+    //FIXME: need to await fetch calls
+    List data = urls
+      .map((url) => sis_api.fetchAssessmentDetail(url)).toList();
     print('data=$data');
     assessmentList = data
-              .map((item) => AssessmentSession.fromJson(item)).toList();
-
+                .map((item) => AssessmentSession.fromJson(item)).toList();
+    print('assessmentList=$assessmentList');
     setState(()=> isLoading = false);
   }
 

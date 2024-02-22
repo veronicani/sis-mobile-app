@@ -27,10 +27,10 @@ Future<void> getToken(String username, String password) async {
   }
 }
 
-/// fetchAssessments: Fetches all assessment session data from SIS API.
-///  Returns: [{id, title, status, api_url}, ...]
+/// fetchAssessmentUrls: Fetches all assessment session urls from SIS API.
+///  Returns: [api_url, ...]
 
-fetchAssessments() async {
+fetchAssessmentUrls() async {
     final token = await storage.read(key: 'token');
 
     http.Response response = await http.get(
@@ -42,23 +42,24 @@ fetchAssessments() async {
 
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['results'];
-      return data;
+      List urls = data.map((item) => (item['api_url'])).toList();
+      return urls;
     } else {
-      throw Exception('Failed to fetch assessment sessions.');
+      throw Exception('Failed to fetch assessment session urls.');
     }
 }
 
 /// fetchAssessmentDetail: Fetches details for one assessment session.
-///   Inputs: id - assessmentsession id (int)
+///   Inputs: url - assessmentsession api_url
 ///   Returns: { id, assessment, title, cohort, description, dri, week_group,
 ///     start_at, end_at }
 ///   TODO: docstring doesn't match (couldn't destructure)
 
-fetchAssessmentDetail(id) async {
+fetchAssessmentDetail(url) async {
   final token = await storage.read(key: 'token');
 
   http.Response response = await http.get(
-    Uri.parse("$baseApiUrl/assessmentsessions/$id"),
+    Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': "Token $token",
