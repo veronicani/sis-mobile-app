@@ -14,7 +14,7 @@ class _AssessmentListState extends State<AssessmentList> {
 
   List<dynamic> assessmentList = [];
 
-  void fetchAssessments() async {
+  fetchAssessments() async {
     final accessToken = await storage.read(key: 'token');
     print(accessToken);
     http.Response response = await http.get(
@@ -26,22 +26,27 @@ class _AssessmentListState extends State<AssessmentList> {
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      print(data);
-      setState((){
-        for (var value in data){
-          print('got to this point');
-          print(value);
-          assessmentList.add(value);
-          print(assessmentList);
-        }
-      });
+      print("***data*** = $data");
+      // setState((){
+      //   for (var value in data){
+      //     print('got to this point');
+      //     print(value);
+      //     assessmentList.add(value);
+      //     print(assessmentList);
+      //   }
+      // });
+
+      assessmentList = data["results"]
+            .map((item) => AssessmentSession.fromJson(item)).toList();
+      print("resList $assessmentList");
+      return assessmentList;
     }
   }
 
   @override
   void initState(){
-    super.initState();
     fetchAssessments();
+    super.initState();
   }
 
   @override
