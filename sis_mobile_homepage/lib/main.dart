@@ -5,7 +5,6 @@ import 'package:sis_mobile_homepage/assessment_sessions.dart';
 
 void main() {
   runApp(MyApp());
-  fetchAssessmentDetail(1);
 }
 
 /// Main app.
