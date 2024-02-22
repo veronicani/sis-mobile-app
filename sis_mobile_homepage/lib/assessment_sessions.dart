@@ -54,6 +54,7 @@ class _AssessmentListState extends State<AssessmentList> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Assessments'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
         child: isLoading
