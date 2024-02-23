@@ -73,7 +73,7 @@ class AssessmentListState extends State<AssessmentList> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Assessment',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+                      style: Theme.of(context).textTheme.displayLarge),
                 Table(
                     border: TableBorder.all(),
                     children: [
@@ -112,3 +112,4 @@ class AssessmentListState extends State<AssessmentList> {
     );
   }
 }
+
