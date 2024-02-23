@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:sis_mobile_homepage/assessment_sessions.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sis_mobile_homepage/api.dart' as sis_api;
 
 void main() {
   runApp(MyApp());
+  // sis_api.getToken(fake_username, fake_password);
 }
 
 /// Main app.

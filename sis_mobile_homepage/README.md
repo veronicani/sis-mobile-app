@@ -1,16 +1,32 @@
 # sis_mobile_homepage
 
-A new Flutter project.
+Flutter project for SIS R35's mobile homepage! (WIP, last updated 2024 Feb 22, 6:20PM PST)
+
+Currently displays the Assessments section of Rithm's upcoming page.
+Developed by a team with access to only iOS and OS, so unfortunately it hasn't been tested for Android compatibility.
+
+![iOS Simulator Screenshot](lib/simulator_screenshot.png)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Necessary packages to run this application (on Mac):
+- Cocoapods ^1.15.2 (installed via Homebrew)
+  - To install via Homebrew:
+    `brew install cocoapods`
+- Xcode 
+- Flutter SDK
+Installation docs (development OS, target iOS): https://docs.flutter.dev/get-started/install/macos/mobile-ios?tab=vscode#configure-xcode
 
-A few resources to get you started if this is your first Flutter project:
+### Notes
+- This app is currently making API requests to a version of SIS on localhost:8000, so please `python3 manage.py runserver`
+- Authentication has not been implemented. In order to get a token, please include `getToken()` during app initialization, and pass in a fake username & password from the SIS fake dev database.
+```dart
+//In main.dart
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+void main() {
+  runApp(MyApp());
+  // sis_api.getToken(fake_username, fake_password); <- Uncomment me! Replace w/ credentials
+}
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
