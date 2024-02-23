@@ -1,3 +1,5 @@
+import 'package:date_time_format/date_time_format.dart';
+
 /// AssessmentSession: {id, title, status, apiUrl}
 
 class AssessmentSession {
@@ -21,6 +23,12 @@ class AssessmentSession {
     });
 
   factory AssessmentSession.fromJson(Map<String, dynamic> json){
+    String startAt = json["start_at"];
+    print('startAt=$startAt');
+    DateTime startAtDateTime = DateTime.parse(startAt).toLocal();
+    print('startAtDateTime=$startAtDateTime');
+    DateTime startAtDateLocal = DateFormat.yyyy-MM-ddTHH:mm:ss.format(startAtDateTime);
+    // print('dateLocal=$dateLocal');R
     return AssessmentSession(
       id: json["id"],
       title: json["title"],
@@ -32,3 +40,4 @@ class AssessmentSession {
     );
   }
 }
+

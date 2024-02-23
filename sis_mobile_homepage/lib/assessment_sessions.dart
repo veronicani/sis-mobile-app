@@ -59,10 +59,9 @@ class AssessmentListState extends State<AssessmentList> {
 
   @override
   Widget build(BuildContext context) {
-    print("**assessmentList**= $assessmentList");
     return Scaffold(
       appBar: AppBar(
-        title: Text('{R} Rithm'),
+        title: Text('{R} Rithm Upcoming'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
@@ -72,17 +71,19 @@ class AssessmentListState extends State<AssessmentList> {
               child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Assessment',
+                Text('Assessments',
                       style: Theme.of(context).textTheme.displayLarge),
                 Table(
-                    border: TableBorder.all(),
+                    border: TableBorder(horizontalInside:
+                    BorderSide(width: 1, color: Colors.black26, style:
+                    BorderStyle.solid)),
                     children: [
                       TableRow(children: [
                         Text('Assessment',
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.left,
                             style: TextStyle(fontWeight: FontWeight.bold)),
                         Text('Status',
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.left,
                             style: TextStyle(fontWeight: FontWeight.bold)),
                       ]),
                       for (var assessment in assessmentList)
@@ -90,16 +91,20 @@ class AssessmentListState extends State<AssessmentList> {
                           Padding(
                             padding: EdgeInsets.all(5.0),
                             child:
-                                Text(assessment.title, textAlign: TextAlign.center),
+                                Text(assessment.title,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blue[900])),
                           ),
                           Padding(
                               padding: EdgeInsets.all(5.0),
                               child: Column(
                                 children: [
                                   Text(assessment.startAt,
-                                      textAlign: TextAlign.center),
+                                      textAlign: TextAlign.left),
                                   Text(assessment.endAt,
-                                      textAlign: TextAlign.center)
+                                      textAlign: TextAlign.left)
                                 ],
                               )),
                         ]),
