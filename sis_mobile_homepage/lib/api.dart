@@ -3,13 +3,13 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-///SIS API.
+///Rithm SIS API.
 const baseApiUrl = 'http://localhost:8000/api';
 final storage = FlutterSecureStorage();
 
 /// getToken: Sends user credentials to retrieve token and store in local
 /// storage for future API requests.
-
+///   Inputs: username, password
 Future<void> getToken(String username, String password) async {
   final url = Uri.parse('$baseApiUrl/-token/');
   var response = await http.post(
@@ -29,7 +29,6 @@ Future<void> getToken(String username, String password) async {
 
 /// fetchAssessmentUrls: Fetches all assessment session urls from SIS API.
 ///  Returns: [api_url, ...]
-
 fetchAssessmentUrls() async {
     final token = await storage.read(key: 'token');
 
@@ -52,9 +51,8 @@ fetchAssessmentUrls() async {
 /// fetchAssessmentDetail: Fetches details for one assessment session.
 ///   Inputs: url - assessmentsession api_url
 ///   Returns: { id, assessment, title, cohort, description, dri, week_group,
-///     start_at, end_at }
-///   TODO: docstring doesn't match (couldn't destructure)
-
+///     start_at, end_at, require_github_url, require_deployment_url, 
+///     require_zipfile, is_pass_fail, submission_set }
 fetchAssessmentDetail(url) async {
   final token = await storage.read(key: 'token');
 
@@ -66,7 +64,6 @@ fetchAssessmentDetail(url) async {
         });
   if (response.statusCode == 200) {
       Map data = json.decode(response.body);
-      // print('fetchAssessmentDetail data= $data');
       return data;
     } else {
       throw Exception('Failed to fetch assessment session detail.');

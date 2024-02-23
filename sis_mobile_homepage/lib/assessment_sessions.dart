@@ -4,30 +4,21 @@ import 'package:sis_mobile_homepage/api.dart' as sis_api;
 import 'package:sis_mobile_homepage/models/assessment_session.dart';
 
 /// AssessmentList widget.
-
 class AssessmentList extends StatefulWidget {
   @override
   AssessmentListState createState() => AssessmentListState();
 }
 
 /// AssessmentListState: manages state for AssessmentList widget.
-
 class AssessmentListState extends State<AssessmentList> {
   bool isLoading = false;
   List assessmentList = [];
 
-  /// loadAssessments: Makes call to API for assessments sessions, and updates
-  /// assessmentList with list of jsonified assessment sessions objects.
-  /// Updates isLoading state.
-
+  /// fetchAllAssessmentDetail: Given a list of api urls for assessment sessions,
+  /// makes requests for assessment session details.
+  ///   Returns a list of assessment session objects.
   Future<List> fetchAllAssessmentDetail(urls) async {
-
     List finalData = [];
-
-    // await Future.wait(urls.forEach((url) async {
-    //     var data = await sis_api.fetchAssessmentDetail(url);
-    //     finalData.add(data);
-    //   }));
 
     for (var url in urls) {
         var data = await sis_api.fetchAssessmentDetail(url);
@@ -36,21 +27,23 @@ class AssessmentListState extends State<AssessmentList> {
 
     return finalData;
   }
-
+  
+  /// loadAssessments: Makes call to API for assessments sessions, and updates
+  /// assessmentList with list of jsonified assessment session objects.
+  /// Updates isLoading state.
   Future loadAssessments() async {
     setState(() => isLoading = true);
 
     List urls = await sis_api.fetchAssessmentUrls();
     List data = await fetchAllAssessmentDetail(urls);
 
-    assessmentList = data
-                .map((item) => AssessmentSession.fromJson(item)).toList();
-    print('assessmentList=$assessmentList');
-    setState(()=> isLoading = false);
+    assessmentList =
+        data.map((item) => AssessmentSession.fromJson(item)).toList();
+    
+    setState(() => isLoading = false);
   }
 
   /// initState: initializes state and fetches API data on widget load.
-
   @override
   void initState(){
     loadAssessments();

@@ -8,14 +8,12 @@ void main() {
 }
 
 /// Main app.
-
 class MyApp extends StatefulWidget {
   @override
   MyAppState createState() => MyAppState();
 }
 
 /// State for main app.
-
 class MyAppState extends State<MyApp>{
 
   @override
