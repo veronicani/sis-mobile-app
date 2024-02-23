@@ -5,7 +5,7 @@ Flutter project for SIS R35's mobile homepage! (WIP, last updated 2024 Feb 22, 6
 Currently displays the Assessments section of Rithm's upcoming page.
 Developed by a team with access to only iOS and OS, so unfortunately it hasn't been tested for Android compatibility.
 
-![iOS Simulator Screenshot](lib/simulator_screenshot.png)
+![iOS Simulator Screenshot](/sis_mobile_homepage/lib/simulator_screenshot.png)
 
 ## Getting Started
 
@@ -13,7 +13,7 @@ Necessary packages to run this application (on Mac):
 - Cocoapods ^1.15.2 (installed via Homebrew)
   - To install via Homebrew:
     `brew install cocoapods`
-- Xcode 
+- Xcode
 - Flutter SDK
 Installation docs (development OS, target iOS): https://docs.flutter.dev/get-started/install/macos/mobile-ios?tab=vscode#configure-xcode
 
