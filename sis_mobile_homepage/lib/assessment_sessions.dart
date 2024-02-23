@@ -68,7 +68,8 @@ class AssessmentListState extends State<AssessmentList> {
       body: Center(
         child: isLoading
             ? CircularProgressIndicator()
-            : Column(
+            : SingleChildScrollView(
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Assessment',
@@ -107,6 +108,7 @@ class AssessmentListState extends State<AssessmentList> {
               ],
             ),
       ),
+    ),
     );
   }
 }
