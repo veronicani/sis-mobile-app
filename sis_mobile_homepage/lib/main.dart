@@ -30,6 +30,7 @@ class MyAppState extends State<MyApp>{
           textTheme: TextTheme(
             displayLarge: GoogleFonts.sourceSerif4(
               fontSize: 30,
+              height: 2,
             ),
             bodyMedium: GoogleFonts.sourceSerif4(
               fontSize: 16,

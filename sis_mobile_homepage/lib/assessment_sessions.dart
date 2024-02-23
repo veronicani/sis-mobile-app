@@ -100,10 +100,11 @@ class AssessmentListState extends State<AssessmentList> {
                           Padding(
                               padding: EdgeInsets.all(5.0),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(assessment.startAt,
+                                  Text('Open at: ${assessment.startAt}',
                                       textAlign: TextAlign.left),
-                                  Text(assessment.endAt,
+                                  Text('Close at: ${assessment.endAt}',
                                       textAlign: TextAlign.left)
                                 ],
                               )),

@@ -23,20 +23,20 @@ class AssessmentSession {
     });
 
   factory AssessmentSession.fromJson(Map<String, dynamic> json){
-    String startAt = json["start_at"];
-    print('startAt=$startAt');
-    DateTime startAtDateTime = DateTime.parse(startAt).toLocal();
-    print('startAtDateTime=$startAtDateTime');
-    DateTime startAtDateLocal = DateFormat.yyyy-MM-ddTHH:mm:ss.format(startAtDateTime);
-    // print('dateLocal=$dateLocal');R
+
+    String convertUtcToLocal(String utcString){
+      DateTime convertToDateTime = DateTime.parse(utcString);
+      return convertToDateTime.format('D, M j, H:i');
+    }
+
     return AssessmentSession(
       id: json["id"],
       title: json["title"],
       status: json["status"],
       apiUrl: json["api_url"],
       description: json["description"],
-      startAt: json["start_at"],
-      endAt: json["end_at"]
+      startAt: convertUtcToLocal(json["start_at"]),
+      endAt: convertUtcToLocal(json["end_at"])
     );
   }
 }
